@@ -45,6 +45,7 @@ const chips = {
   rnb:        u("photo-1605170876472-db58e15c430e"),
   running:    u("photo-1460353581641-37baddab0fa2"),
   bouldering: u("photo-1501450626433-39bbf117090e"),
+  poker:      u("photo-1670659215634-213e8d03fccb"),
   dumbbell:   u("photo-1584827386894-fc939dad6078"),
   chameleon:  u("photo-1654751894453-ab14e1e977a7"),
 };
@@ -69,12 +70,14 @@ export const about: { lines: Token[][] } = {
       { kind: "word", text: "I LIVE FOR" },
       { kind: "img", src: chips.rnb, alt: "headphones" },
       { kind: "word", text: "R&B," },
-    ],
-    [
       { kind: "img", src: chips.running, alt: "running shoes" },
       { kind: "word", text: "RUNNING," },
+    ],
+    [
       { kind: "img", src: chips.bouldering, alt: "climbing wall" },
       { kind: "word", text: "BOULDERING," },
+      { kind: "img", src: chips.poker, alt: "poker chips" },
+      { kind: "word", text: "POKER," },
     ],
     [
       { kind: "word", text: "AND THE OCCASIONAL" },
@@ -84,7 +87,7 @@ export const about: { lines: Token[][] } = {
     [
       { kind: "word", text: "A" },
       { kind: "img", src: chips.chameleon, alt: "chameleon" },
-      { kind: "word", text: "JACK OF ALL TRADES WITH MONSTER ADAPTABILITY." },
+      { kind: "word", text: "JACK OF ALL TRADES, PLAYING EVERY HAND WITH MONSTER ADAPTABILITY." },
     ],
   ],
 };

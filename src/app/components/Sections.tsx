@@ -19,37 +19,34 @@ const fadeUp = {
 const stagger = (i: number) => ({
   initial: { opacity: 0, y: 16 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6, delay: 0.1 + i * 0.08, ease: [0.22, 1, 0.36, 1] as const },
+  transition: {
+    duration: 0.6,
+    delay: 0.1 + i * 0.08,
+    ease: [0.22, 1, 0.36, 1] as const,
+  },
 });
 
 const display = { fontFamily: "var(--font-display)" };
 const body = { fontFamily: "var(--font-body)" };
 
 function SectionShell({
-  index,
-  suit,
   title,
   children,
 }: {
-  index: string;
-  suit: string;
   title: string;
   children: React.ReactNode;
 }) {
   return (
     <div className="w-full px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32 pt-20 pb-48">
       <motion.div {...fadeUp} className="mb-16">
-        <div
-          className="flex items-baseline gap-4 tracking-[0.4em] text-[10px]"
-          style={{ ...display, color: "var(--surface-muted)" }}
-        >
-          <span>{index}</span>
-          <span className="h-px w-12" style={{ backgroundColor: "var(--surface-muted)" }} />
-          <span>{suit.toUpperCase()}</span>
-        </div>
         <h1
-          style={{ ...display, color: "var(--surface-text)", fontWeight: 300, letterSpacing: "-0.03em" }}
-          className="mt-5 text-5xl md:text-6xl leading-[1.05]"
+          style={{
+            ...display,
+            color: "var(--surface-text)",
+            fontWeight: 300,
+            letterSpacing: "-0.03em",
+          }}
+          className="text-5xl md:text-6xl leading-[1.05]"
         >
           {title}
         </h1>
@@ -125,8 +122,11 @@ export function AboutSection() {
 
 export function ExperienceSection() {
   return (
-    <SectionShell index="II" suit="Spades" title="Experience">
-      <div className="space-y-0" style={{ borderBottom: "1px solid var(--surface-rule)" }}>
+    <SectionShell title="Experience">
+      <div
+        className="space-y-0"
+        style={{ borderBottom: "1px solid var(--surface-rule)" }}
+      >
         {experience.map((r, i) => (
           <motion.div
             key={r.role}
@@ -143,11 +143,19 @@ export function ExperienceSection() {
             <div className="col-span-9 md:col-span-7">
               <div
                 className="text-2xl"
-                style={{ ...display, color: "var(--surface-text)", fontWeight: 300, letterSpacing: "-0.01em" }}
+                style={{
+                  ...display,
+                  color: "var(--surface-text)",
+                  fontWeight: 300,
+                  letterSpacing: "-0.01em",
+                }}
               >
                 {r.role}
               </div>
-              <div className="mt-1" style={{ ...body, color: "var(--surface-text)", opacity: 0.75 }}>
+              <div
+                className="mt-1"
+                style={{ ...body, color: "var(--surface-text)", opacity: 0.75 }}
+              >
                 {r.company}
               </div>
             </div>
@@ -166,18 +174,29 @@ export function ExperienceSection() {
 
 export function ProjectsSection() {
   return (
-    <SectionShell index="III" suit="Diamonds" title="Projects">
+    <SectionShell title="Projects">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-12">
         {projects.map((p, i) => (
-          <motion.a key={p.name} href={p.href ?? "#"} {...stagger(i)} className="group block">
+          <motion.a
+            key={p.name}
+            href={p.href ?? "#"}
+            {...stagger(i)}
+            className="group block"
+          >
             <div
-              className="aspect-[4/5] mb-5 overflow-hidden relative"
-              style={{ backgroundColor: "rgba(255,255,255,0.04)", border: "1px solid var(--surface-rule)" }}
+              className="aspect-4/5 mb-5 overflow-hidden relative"
+              style={{
+                backgroundColor: "rgba(255,255,255,0.04)",
+                border: "1px solid var(--surface-rule)",
+              }}
             >
               <motion.div
                 initial={{ scale: 1 }}
                 whileHover={{ scale: 1.04 }}
-                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as const }}
+                transition={{
+                  duration: 0.8,
+                  ease: [0.22, 1, 0.36, 1] as const,
+                }}
                 className="w-full h-full"
                 style={{
                   background:
@@ -196,13 +215,24 @@ export function ProjectsSection() {
             <div className="flex items-baseline justify-between">
               <span
                 className="text-2xl"
-                style={{ ...display, color: "var(--surface-text)", fontWeight: 300, letterSpacing: "-0.01em" }}
+                style={{
+                  ...display,
+                  color: "var(--surface-text)",
+                  fontWeight: 300,
+                  letterSpacing: "-0.01em",
+                }}
               >
                 {p.name}
               </span>
-              <ArrowUpRight className="w-4 h-4 transition-colors" style={{ color: "var(--surface-muted)" }} />
+              <ArrowUpRight
+                className="w-4 h-4 transition-colors"
+                style={{ color: "var(--surface-muted)" }}
+              />
             </div>
-            <div className="text-sm mt-1" style={{ ...body, color: "var(--surface-text)", opacity: 0.7 }}>
+            <div
+              className="text-sm mt-1"
+              style={{ ...body, color: "var(--surface-text)", opacity: 0.7 }}
+            >
               {p.tag}
             </div>
           </motion.a>
@@ -214,7 +244,7 @@ export function ProjectsSection() {
 
 export function ContactSection() {
   return (
-    <SectionShell index="IV" suit="Clubs" title="Contact">
+    <SectionShell title="Contact">
       <motion.p
         {...stagger(0)}
         className="leading-relaxed mb-12 max-w-lg text-lg"
@@ -231,7 +261,10 @@ export function ContactSection() {
             className="flex items-center gap-4 py-4 group"
             style={{ borderTop: "1px solid var(--surface-rule)" }}
           >
-            <l.icon className="w-4 h-4" style={{ color: "var(--surface-muted)" }} />
+            <l.icon
+              className="w-4 h-4"
+              style={{ color: "var(--surface-muted)" }}
+            />
             <span
               className="group-hover:translate-x-1 transition-transform duration-500"
               style={{ ...body, color: "var(--surface-text)" }}

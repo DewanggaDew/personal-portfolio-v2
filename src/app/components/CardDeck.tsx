@@ -10,21 +10,38 @@ interface CardDeckProps {
 
 type Phase = "stack" | "fan" | "dock";
 
-const FAN_POSITIONS = [
+const FAN_POSITIONS_DESKTOP = [
   { x: -260, rotate: -10 },
   { x: -90, rotate: -3.5 },
   { x: 90, rotate: 3.5 },
   { x: 260, rotate: 10 },
 ] as const;
 
-const DOCK_POSITIONS = [
+const DOCK_POSITIONS_DESKTOP = [
   { x: -210, rotate: -8 },
   { x: -70, rotate: -3 },
   { x: 70, rotate: 3 },
   { x: 210, rotate: 8 },
 ] as const;
 
-const DECK_HEIGHT = 320;
+const FAN_POSITIONS_MOBILE = [
+  { x: -110, rotate: -10 },
+  { x: -38, rotate: -3.5 },
+  { x: 38, rotate: 3.5 },
+  { x: 110, rotate: 10 },
+] as const;
+
+const DOCK_POSITIONS_MOBILE = [
+  { x: -95, rotate: -8 },
+  { x: -32, rotate: -3 },
+  { x: 32, rotate: 3 },
+  { x: 95, rotate: 8 },
+] as const;
+
+const MOBILE_BREAKPOINT = 640;
+
+const DECK_HEIGHT_DESKTOP = 320;
+const DECK_HEIGHT_MOBILE = 220;
 
 export function CardDeck({ onSelect, onReady }: CardDeckProps) {
   const [phase, setPhase] = useState<Phase>("stack");
@@ -33,9 +50,17 @@ export function CardDeck({ onSelect, onReady }: CardDeckProps) {
   const [vh, setVh] = useState(
     typeof window !== "undefined" ? window.innerHeight : 800,
   );
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== "undefined"
+      ? window.innerWidth < MOBILE_BREAKPOINT
+      : false,
+  );
 
   useEffect(() => {
-    const onResize = () => setVh(window.innerHeight);
+    const onResize = () => {
+      setVh(window.innerHeight);
+      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
+    };
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
   }, []);
@@ -52,6 +77,20 @@ export function CardDeck({ onSelect, onReady }: CardDeckProps) {
     };
   }, [onReady]);
 
+  const fanPositions = isMobile ? FAN_POSITIONS_MOBILE : FAN_POSITIONS_DESKTOP;
+  const dockPositions = isMobile
+    ? DOCK_POSITIONS_MOBILE
+    : DOCK_POSITIONS_DESKTOP;
+  const fanSize = isMobile
+    ? { width: 140, height: 196 }
+    : { width: 220, height: 308 };
+  const dockSize = isMobile
+    ? { width: 120, height: 168 }
+    : { width: 190, height: 266 };
+  const deckHeight = isMobile ? DECK_HEIGHT_MOBILE : DECK_HEIGHT_DESKTOP;
+  const dockClosedY = isMobile ? 130 : 180;
+  const dockOpenY = 20;
+
   const transforms = (i: number) => {
     if (phase === "stack") {
       return {
@@ -59,34 +98,34 @@ export function CardDeck({ onSelect, onReady }: CardDeckProps) {
         y: 0,
         rotate: -3 + i * 2,
         scale: 1,
-        width: 220,
-        height: 308,
+        width: fanSize.width,
+        height: fanSize.height,
       };
     }
     if (phase === "fan") {
-      const f = FAN_POSITIONS[i]!;
+      const f = fanPositions[i]!;
       return {
         x: f.x,
         y: 0,
         rotate: f.rotate,
         scale: 1,
-        width: 220,
-        height: 308,
+        width: fanSize.width,
+        height: fanSize.height,
       };
     }
-    const d = DOCK_POSITIONS[i]!;
+    const d = dockPositions[i]!;
     return {
       x: d.x,
       y: 0,
       rotate: d.rotate,
       scale: 1,
-      width: 190,
-      height: 266,
+      width: dockSize.width,
+      height: dockSize.height,
     };
   };
 
-  const centeredY = -((vh - DECK_HEIGHT) / 2);
-  const targetY = phase === "dock" ? (open ? 20 : 180) : centeredY;
+  const centeredY = -((vh - deckHeight) / 2);
+  const targetY = phase === "dock" ? (open ? dockOpenY : dockClosedY) : centeredY;
 
   return (
     <motion.div
@@ -101,7 +140,7 @@ export function CardDeck({ onSelect, onReady }: CardDeckProps) {
         }
       }}
       className="fixed left-0 right-0 bottom-0 z-30 flex justify-center items-center"
-      style={{ height: DECK_HEIGHT }}
+      style={{ height: deckHeight }}
     >
       <div className="relative w-full h-full flex items-center justify-center">
         <motion.div
