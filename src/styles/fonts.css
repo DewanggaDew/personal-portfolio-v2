@@ -1,0 +1,7 @@
+@import url('https://api.fontshare.com/v2/css?f[]=general-sans@200,300,400,500,600,700&f[]=gambetta@300,400,500,600,700&f[]=gambarino@400&display=swap');
+
+:root {
+  --font-display: 'General Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-body: 'Gambetta', Georgia, serif;
+  --font-hero: 'Gambarino', Georgia, serif;
+}

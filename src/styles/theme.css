@@ -1,0 +1,51 @@
+/*
+ * Surface tokens
+ *
+ * The portfolio's color palette is "surface-driven": <App /> picks one of
+ * five surfaces (felt, charcoal, leather, ink, bone) and writes the active
+ * --surface-* values onto its root element. These :root defaults exist only
+ * so the very first paint (before React hydrates) isn't unstyled — they
+ * mirror the "felt" surface defined in BackgroundSwitcher.tsx.
+ */
+:root {
+  --surface-base: #0e2a23;
+  --surface-text: #f5ecd6;
+  --surface-muted: #c9b896;
+  --surface-rule: rgba(201, 184, 150, 0.33);
+
+  --font-size: 16px;
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    font-size: var(--font-size);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  html,
+  body,
+  #root {
+    margin: 0;
+    min-height: 100%;
+  }
+
+  body {
+    background-color: var(--surface-base);
+    color: var(--surface-text);
+    font-family: var(--font-body);
+    overscroll-behavior: none;
+  }
+
+  ::selection {
+    background: var(--surface-text);
+    color: var(--surface-base);
+  }
+}
