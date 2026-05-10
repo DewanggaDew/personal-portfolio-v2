@@ -3,6 +3,7 @@ dist
 dist-ssr
 *.local
 *.tsbuildinfo
+.agents
 
 # editor / OS
 .DS_Store
@@ -22,3 +23,5 @@ lerna-debug.log*
 .env
 .env.*
 !.env.example
+
+
