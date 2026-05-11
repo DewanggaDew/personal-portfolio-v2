@@ -17,11 +17,12 @@ project.
 
 ```bash
 pnpm install
-pnpm dev          # Vite dev server on :5173
-pnpm typecheck    # tsc -b --noEmit
-pnpm lint         # eslint . --max-warnings 0
-pnpm build        # tsc -b && vite build
-pnpm preview      # serve the production build
+pnpm dev               # Vite dev server on :5173
+pnpm typecheck         # tsc --noEmit
+pnpm lint              # eslint . --max-warnings 0
+pnpm build             # tsc --noEmit && vite build
+pnpm preview           # serve the production build
+pnpm optimize-images   # re-encode src/imports/* to optimized WebP (see below)
 ```
 
 ## Project layout
@@ -65,6 +66,34 @@ properties:
 | `--surface-rule`  | 1px hairline borders / dividers       |
 
 Defaults are set in `src/styles/theme.css` so first paint isn't flashy.
+
+## Image optimization
+
+Card-face images and any other raster assets live in `src/imports/`. After
+adding or replacing a file there, run:
+
+```bash
+pnpm optimize-images
+```
+
+This re-encodes every image in the directory to a well-compressed WebP using
+[sharp](https://sharp.pixelplumbing.com/), clamps the longest edge to 1024 px
+(retina cards never render larger than ~660 px wide), and deletes the original
+JPEG/PNG once the WebP is on disk. Re-running on already-optimized files is a
+safe no-op — outputs that would be larger than the source are skipped.
+
+Useful flags:
+
+```bash
+pnpm optimize-images -- --quality=75       # smaller files, slightly lower quality
+pnpm optimize-images -- --max-width=720    # tighter clamp for thumbnail-only assets
+pnpm optimize-images -- --max-width=0      # disable resizing, only re-encode
+pnpm optimize-images -- --keep-source      # preserve .jpg/.png next to .webp
+pnpm optimize-images -- --dry-run          # preview the savings without writing
+```
+
+The current 4 card faces total **~262 kB** on disk (down from ~11 MB) after
+running with the defaults.
 
 ## Adding a new section
 

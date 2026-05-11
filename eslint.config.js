@@ -31,4 +31,10 @@ export default tseslint.config(
       "no-console": ["warn", { allow: ["warn", "error"] }],
     },
   },
+  {
+    // Node-side build/maintenance scripts: console output is the whole point.
+    files: ["scripts/**/*.{js,mjs,cjs}"],
+    languageOptions: { globals: globals.node },
+    rules: { "no-console": "off" },
+  },
 );
