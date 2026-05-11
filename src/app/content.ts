@@ -1,10 +1,10 @@
 import { Mail, Github, Linkedin, MapPin } from "lucide-react";
 import type { ComponentType, SVGProps } from "react";
 
-import spades from "../imports/Use_the_same_size__same_202605101412.jpeg";
-import diamonds from "../imports/Use_the_same_size__same_202605101412__1_.jpeg";
-import hearts from "../imports/Use_the_same_size__same_202605101412__2_.jpeg";
-import clubs from "../imports/f07875226c1b7c5f09b6dab22b15d59c.jpg";
+import spades from "../imports/spade.webp";
+import diamonds from "../imports/diamond.webp";
+import hearts from "../imports/heart.webp";
+import clubs from "../imports/club.webp";
 
 export type SectionId = "about" | "experience" | "projects" | "contact";
 
