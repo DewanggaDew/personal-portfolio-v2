@@ -79,6 +79,18 @@ export function Card({
             fetchPriority="high"
             className="w-full h-full object-cover pointer-events-none"
           />
+          <motion.div
+            animate={{ opacity: isHovered ? 1 : 0, y: isHovered ? 0 : -6 }}
+            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute inset-x-0 top-0 flex items-start justify-center pt-3 pointer-events-none"
+          >
+            <span
+              className="text-[10px] tracking-[0.35em] uppercase font-semibold"
+              style={{ fontFamily: "var(--font-display)", color: "rgba(0,0,0,0.55)" }}
+            >
+              {label}
+            </span>
+          </motion.div>
         </motion.div>
       </motion.div>
     </motion.div>
