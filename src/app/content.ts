@@ -94,17 +94,141 @@ export const about: { lines: Token[][] } = {
 
 export type { Token };
 
+export type PhotoRatio = "1x1" | "3x4";
+
+export interface ExperiencePhoto {
+  src: string;
+  ratio: PhotoRatio;
+}
+
+/**
+ * Placeholder image builder. picsum.photos returns a deterministic image
+ * per seed, so layout stays stable across reloads while real photos are
+ * still being collected. Width/height match the requested ratio so the
+ * fetched bytes aren't wasted on cropping.
+ */
+const photo = (seed: string, ratio: PhotoRatio): ExperiencePhoto => {
+  const [w, h] = ratio === "1x1" ? [400, 400] : [360, 480];
+  return { src: `https://picsum.photos/seed/${seed}/${w}/${h}`, ratio };
+};
+
 export interface Role {
   years: string;
+  kind: string;
   role: string;
   company: string;
+  bullets: string[];
+  metrics: Array<{
+    value: string;
+    label: string;
+  }>;
+  photos: ExperiencePhoto[];
 }
 
 export const experience: Role[] = [
-  { years: "20XX — Now",  role: "Role Title",       company: "Company Name" },
-  { years: "20XX — 20XX", role: "Role Title",       company: "Company Name" },
-  { years: "20XX — 20XX", role: "Role Title",       company: "Company Name" },
-  { years: "20XX — 20XX", role: "Role Title",       company: "Company Name" },
+  {
+    years: "Aug 2025 — Feb 2026",
+    kind: "Professional",
+    role: "IT Applications Intern",
+    company: "DKSH CSSC · Petaling Jaya, Malaysia",
+    bullets: [
+      "Led development of a production-grade COI Disclosure System using React.js and .NET Core 8.",
+      "Designed REST APIs and normalized relational schemas that removed manual COI review steps.",
+      "Resolved cross-layer defects across React, .NET, and SQL stored procedures to support UAT and rollout.",
+    ],
+    metrics: [
+      { value: "30+", label: "countries supported" },
+      { value: "60%", label: "processing time cut" },
+      { value: "100s", label: "internal users served" },
+    ],
+    photos: [
+      photo("exp-dksh-a", "1x1"),
+      photo("exp-dksh-b", "3x4"),
+      photo("exp-dksh-c", "1x1"),
+      photo("exp-dksh-d", "3x4"),
+    ],
+  },
+  {
+    years: "Nov 2024 — Jul 2025",
+    kind: "Organization",
+    role: "Tech & Hack Team",
+    company: "Garuda Hacks 6.0",
+    bullets: [
+      "Built GH-Portal with React.js, Express.js, Firebase Auth, and Firestore for applications, scheduling, and admin workflows.",
+      "Designed an admin-configurable application system with flexible Firestore schemas and backend validation.",
+      "Developed multi-step forms with react-hook-form, Google OAuth, SendGrid confirmation, and Jest coverage.",
+    ],
+    metrics: [
+      { value: "4", label: "core portal flows" },
+    ],
+    photos: [
+      photo("exp-gh-a", "3x4"),
+      photo("exp-gh-b", "1x1"),
+      photo("exp-gh-c", "3x4"),
+      photo("exp-gh-d", "1x1"),
+    ],
+  },
+  {
+    years: "Jul 2024 — Jun 2025",
+    kind: "Leadership",
+    role: "President",
+    company: "Rotaract Club of Xiamen University Malaysia",
+    bullets: [
+      "Led a Board of Directors to plan club operations, coordinate activities, and deliver community service events.",
+      "Built a collaborative team environment across committees while keeping execution and leadership responsibilities aligned.",
+    ],
+    metrics: [
+      { value: "22", label: "board members led" },
+      { value: "1 yr", label: "presidential term" },
+    ],
+    photos: [
+      photo("exp-rot-a", "1x1"),
+      photo("exp-rot-b", "3x4"),
+      photo("exp-rot-c", "1x1"),
+      photo("exp-rot-d", "3x4"),
+    ],
+  },
+  {
+    years: "Jul 2023 — Sep 2023",
+    kind: "Professional",
+    role: "Web Developer Intern",
+    company: "Moflip Digital Solutions · Jakarta, Indonesia",
+    bullets: [
+      "Refactored a CMS dashboard using React and Tailwind CSS to improve API data flows and validation speed.",
+      "Built configurable content update forms so non-technical users could publish changes independently.",
+      "Streamlined media deployment workflows across platforms.",
+    ],
+    metrics: [
+      { value: "30%", label: "faster load and validation" },
+      { value: "60%", label: "update turnaround cut" },
+      { value: "50%", label: "rollout time reduced" },
+    ],
+    photos: [
+      photo("exp-mof-a", "3x4"),
+      photo("exp-mof-b", "1x1"),
+      photo("exp-mof-c", "3x4"),
+      photo("exp-mof-d", "1x1"),
+    ],
+  },
+  {
+    years: "Sep 2022 — Aug 2026",
+    kind: "Education",
+    role: "Bachelor of Computer Science and Technology (Honors)",
+    company: "Xiamen University Malaysia · GPA 3.91/4.00 · Dean's List",
+    bullets: [
+      "Studying Computer Science and Technology with a software engineering focus.",
+      "Maintained a strong cumulative GPA while earning Dean's List recognition.",
+    ],
+    metrics: [
+      { value: "3.91", label: "cumulative GPA" },
+    ],
+    photos: [
+      photo("exp-edu-a", "1x1"),
+      photo("exp-edu-b", "3x4"),
+      photo("exp-edu-c", "1x1"),
+      photo("exp-edu-d", "3x4"),
+    ],
+  },
 ];
 
 export interface Project {
