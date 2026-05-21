@@ -116,7 +116,7 @@ export function AboutSection() {
           lineHeight: 1.35,
           letterSpacing: "-0.01em",
           color: "var(--surface-text)",
-          fontSize: "clamp(24px, 3.4vw, 48px)",
+          fontSize: "clamp(24px, 5vw, 54px)",
         }}
       >
         {about.lines.map((line, i) => (
