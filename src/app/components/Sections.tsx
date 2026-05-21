@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { motion } from "motion/react";
+import { motion, useInView } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
-import { ImageWithFallback } from "./figma/ImageWithFallback";
 import {
   about,
   experience,
@@ -10,7 +9,6 @@ import {
   contactLinks,
   type ExperiencePhoto,
   type PhotoRatio,
-  type Token,
 } from "../content";
 
 const fadeUp = {
@@ -59,66 +57,74 @@ function SectionShell({
   );
 }
 
-function Chip({ src, alt }: { src: string; alt: string }) {
+/**
+ * Single line of text with a colored "blind" overlay that slides in to
+ * cover the line, then out to reveal it. Mirrors the in-out mode of the
+ * Framer BlindsTextReveal module. Triggers on viewport entry — the About
+ * section is below the fold at page load, so a mount-time animation
+ * would finish before the user ever scrolled into it.
+ */
+function BlindLine({ text, delay }: { text: string; delay: number }) {
+  const inDuration = 0.5;
+  const outDuration = 0.5;
+  const total = inDuration + outDuration;
+  const ref = useRef<HTMLSpanElement | null>(null);
+  const inView = useInView(ref, { once: true, amount: 0.4 });
+
   return (
     <span
-      className="inline-block align-middle mx-1 my-1 overflow-hidden rounded-md"
-      style={{
-        height: "0.85em",
-        width: "1.6em",
-        verticalAlign: "-0.12em",
-        boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.18)",
-      }}
+      ref={ref}
+      className="relative inline-block overflow-hidden align-top"
+      style={{ maxWidth: "100%" }}
     >
-      <ImageWithFallback
-        src={src}
-        alt={alt}
-        loading="lazy"
-        decoding="async"
-        className="block w-full h-full object-cover"
+      <motion.span
+        className="inline-block"
+        initial={{ opacity: 0 }}
+        animate={inView ? { opacity: 1 } : { opacity: 0 }}
+        transition={{ delay: delay + inDuration, duration: 0 }}
+      >
+        {text}
+      </motion.span>
+      <motion.span
+        aria-hidden
+        className="absolute inset-0"
+        style={{ background: "var(--surface-text)", zIndex: 1 }}
+        initial={{ x: "-101%" }}
+        animate={inView ? { x: ["-101%", "0%", "101%"] } : { x: "-101%" }}
+        transition={{
+          delay,
+          duration: total,
+          times: [0, inDuration / total, 1],
+          ease: [
+            [0.81, -0.02, 0.55, 0.51] as [number, number, number, number],
+            [0.28, 0.25, 0.18, 0.98] as [number, number, number, number],
+          ],
+        }}
       />
     </span>
-  );
-}
-
-function RebusLine({ tokens, delay }: { tokens: Token[]; delay: number }) {
-  return (
-    <motion.span
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] as const }}
-      className="inline"
-      style={{
-        fontFamily: "var(--font-hero)",
-        fontWeight: 400,
-        lineHeight: 1.4,
-        letterSpacing: "-0.01em",
-        color: "var(--surface-text)",
-        fontSize: "clamp(32px, 4.5vw, 64px)",
-      }}
-    >
-      {tokens.map((t, i) =>
-        t.kind === "word" ? (
-          <span key={i}>
-            {t.text}
-            {i < tokens.length - 1 ? " " : ""}
-          </span>
-        ) : (
-          <Chip key={i} src={t.src} alt={t.alt} />
-        ),
-      )}{" "}
-    </motion.span>
   );
 }
 
 export function AboutSection() {
   return (
     <div className="w-full px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32 pt-32 pb-48 flex justify-center">
-      <p className="max-w-6xl text-center" style={{ wordSpacing: "0.05em" }}>
-        {about.lines.map((tokens, i) => (
-          <RebusLine key={i} tokens={tokens} delay={0.1 + i * 0.08} />
+      <div
+        className="max-w-5xl text-center"
+        style={{
+          fontFamily: "var(--font-hero)",
+          fontWeight: 400,
+          lineHeight: 1.35,
+          letterSpacing: "-0.01em",
+          color: "var(--surface-text)",
+          fontSize: "clamp(24px, 3.4vw, 48px)",
+        }}
+      >
+        {about.lines.map((line, i) => (
+          <div key={i} className="block">
+            <BlindLine text={line} delay={0.15 + i * 0.08} />
+          </div>
         ))}
-      </p>
+      </div>
     </div>
   );
 }

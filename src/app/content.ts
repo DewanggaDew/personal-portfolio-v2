@@ -5,6 +5,14 @@ import spades from "../imports/spades.webp";
 import diamonds from "../imports/diamonds.webp";
 import hearts from "../imports/hearts.webp";
 import clubs from "../imports/clubs.webp";
+import dksh1 from "../imports/dksh1.webp";
+import dksh2 from "../imports/dksh2.webp";
+import dksh3 from "../imports/dksh3.webp";
+import rac1 from "../imports/rac1.webp";
+import rac2 from "../imports/rac2.webp";
+import rac3 from "../imports/rac3.webp";
+import rac4 from "../imports/rac4.webp";
+import xmum2 from "../imports/xmum2.webp";
 
 export type SectionId = "about" | "experience" | "projects" | "contact";
 
@@ -27,72 +35,14 @@ export const hero = {
   lines: ["DEWANGGA", "DEWATA"] as const,
 };
 
-/**
- * "Rebus" inline-image tokens. Unsplash URLs use w=128 because the chips
- * render at ~1.6em wide; a 1080w fetch would be a 50× waste.
- */
-type Token =
-  | { kind: "word"; text: string }
-  | { kind: "img"; src: string; alt: string };
-
-const u = (id: string) =>
-  `https://images.unsplash.com/${id}?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=128`;
-
-const chips = {
-  code:       u("photo-1692780237535-13c64f645fb5"),
-  jakarta:    u("photo-1775808381593-b19e7927b7ce"),
-  helping:    u("photo-1651372381086-9861c9c81db5"),
-  rnb:        u("photo-1605170876472-db58e15c430e"),
-  running:    u("photo-1460353581641-37baddab0fa2"),
-  bouldering: u("photo-1501450626433-39bbf117090e"),
-  poker:      u("photo-1670659215634-213e8d03fccb"),
-  dumbbell:   u("photo-1584827386894-fc939dad6078"),
-  chameleon:  u("photo-1654751894453-ab14e1e977a7"),
-};
-
-export const about: { lines: Token[][] } = {
+export const about: { lines: string[] } = {
   lines: [
-    [
-      { kind: "word", text: "I'M A" },
-      { kind: "img", src: chips.code, alt: "code" },
-      { kind: "word", text: "SOFTWARE DEVELOPER" },
-    ],
-    [
-      { kind: "word", text: "FROM" },
-      { kind: "img", src: chips.jakarta, alt: "jakarta sky" },
-      { kind: "word", text: "JAKARTA, BUILDING" },
-    ],
-    [
-      { kind: "img", src: chips.helping, alt: "hands together" },
-      { kind: "word", text: "STUFF THAT HELPS PEOPLE." },
-    ],
-    [
-      { kind: "word", text: "I LIVE FOR" },
-      { kind: "img", src: chips.rnb, alt: "headphones" },
-      { kind: "word", text: "R&B," },
-      { kind: "img", src: chips.running, alt: "running shoes" },
-      { kind: "word", text: "RUNNING," },
-    ],
-    [
-      { kind: "img", src: chips.bouldering, alt: "climbing wall" },
-      { kind: "word", text: "BOULDERING," },
-      { kind: "img", src: chips.poker, alt: "poker chips" },
-      { kind: "word", text: "POKER," },
-    ],
-    [
-      { kind: "word", text: "AND THE OCCASIONAL" },
-      { kind: "img", src: chips.dumbbell, alt: "dumbbell" },
-      { kind: "word", text: "GYM SESH." },
-    ],
-    [
-      { kind: "word", text: "A" },
-      { kind: "img", src: chips.chameleon, alt: "chameleon" },
-      { kind: "word", text: "JACK OF ALL TRADES, PLAYING EVERY HAND WITH MONSTER ADAPTABILITY." },
-    ],
+    "I'M A SOFTWARE DEVELOPER FROM JAKARTA",
+    "AIMING TO BUILD MEANINGFUL PRODUCTS. ALWAYS FUELED BY R&B, RUNNING,",
+    "BOULDERING, POKER, AND GYM SESHS.",
+    "A JACK OF ALL TRADES, PLAYING EVERY HAND WITH MONSTER ADAPTABILITY.",
   ],
 };
-
-export type { Token };
 
 export type PhotoRatio = "1x1" | "3x4";
 
@@ -142,10 +92,10 @@ export const experience: Role[] = [
       { value: "100s", label: "internal users served" },
     ],
     photos: [
-      photo("exp-dksh-a", "1x1"),
-      photo("exp-dksh-b", "3x4"),
+      { src: dksh1, ratio: "1x1" },
+      { src: dksh2, ratio: "3x4" },
       photo("exp-dksh-c", "1x1"),
-      photo("exp-dksh-d", "3x4"),
+      { src: dksh3, ratio: "3x4" },
     ],
   },
   {
@@ -182,10 +132,10 @@ export const experience: Role[] = [
       { value: "1 yr", label: "presidential term" },
     ],
     photos: [
-      photo("exp-rot-a", "1x1"),
-      photo("exp-rot-b", "3x4"),
-      photo("exp-rot-c", "1x1"),
-      photo("exp-rot-d", "3x4"),
+      { src: rac1, ratio: "1x1" },
+      { src: rac4, ratio: "3x4" },
+      { src: rac2, ratio: "1x1" },
+      { src: rac3, ratio: "1x1" },
     ],
   },
   {
@@ -223,7 +173,7 @@ export const experience: Role[] = [
       { value: "3.91", label: "cumulative GPA" },
     ],
     photos: [
-      photo("exp-edu-a", "1x1"),
+      { src: xmum2, ratio: "1x1" },
       photo("exp-edu-b", "3x4"),
       photo("exp-edu-c", "1x1"),
       photo("exp-edu-d", "3x4"),
