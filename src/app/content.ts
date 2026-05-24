@@ -207,13 +207,13 @@ export interface ContactLink {
 }
 
 export const contactCopy =
-  "Slow correspondence welcome. I usually answer within a few days, with intention.";
+  "Open to collaborate or any enquiries.";
 
 export const contactLinks: ContactLink[] = [
-  { icon: Mail,     label: "hello@portfolio.com", href: "mailto:hello@portfolio.com" },
-  { icon: Github,   label: "github.com/portfolio", href: "#" },
-  { icon: Linkedin, label: "in/portfolio",         href: "#" },
-  { icon: MapPin,   label: "Jakarta, ID",          href: "#" },
+  { icon: Mail,     label: "dewangga.indera@gmail.com",      href: "mailto:dewangga.indera@gmail.com" },
+  { icon: Github,   label: "github.com/DewanggaDew",         href: "https://github.com/DewanggaDew" },
+  { icon: Linkedin, label: "in/dewangga-dewata",             href: "https://www.linkedin.com/in/dewangga-dewata/" },
+  { icon: MapPin,   label: "Jakarta, ID",                    href: "#" },
 ];
 
 export const footer = {
