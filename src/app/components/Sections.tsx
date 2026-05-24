@@ -60,16 +60,15 @@ function SectionShell({
 /**
  * Single line of text with a colored "blind" overlay that slides in to
  * cover the line, then out to reveal it. Mirrors the in-out mode of the
- * Framer BlindsTextReveal module. Triggers on viewport entry — the About
- * section is below the fold at page load, so a mount-time animation
- * would finish before the user ever scrolled into it.
+ * Framer BlindsTextReveal module. Re-triggers every time the line
+ * enters the viewport so the reveal plays again on scroll-back.
  */
 function BlindLine({ text, delay }: { text: string; delay: number }) {
   const inDuration = 0.5;
   const outDuration = 0.5;
   const total = inDuration + outDuration;
   const ref = useRef<HTMLSpanElement | null>(null);
-  const inView = useInView(ref, { once: true, amount: 0.4 });
+  const inView = useInView(ref, { amount: 0.4 });
 
   return (
     <span
