@@ -9,7 +9,6 @@ import { hero } from "../content";
 
 import casioWatch from "../../imports/hero-section-asset/casio-watch.webp";
 import freitag from "../../imports/hero-section-asset/freitag.webp";
-import owala from "../../imports/hero-section-asset/owala.webp";
 import runningShoe from "../../imports/hero-section-asset/running-shoe.webp";
 import sweater from "../../imports/hero-section-asset/sweater.webp";
 
@@ -48,7 +47,7 @@ const items: FloatingItemConfig[] = [
   {
     src: sweater,
     alt: "Studio Concrete sweater",
-    top: "6%",
+    top: "4%",
     left: "2%",
     size: 300,
     rotate: -10,
@@ -60,8 +59,8 @@ const items: FloatingItemConfig[] = [
   {
     src: casioWatch,
     alt: "Casio watch",
-    top: "14%",
-    right: "6%",
+    top: "8%",
+    right: "5%",
     size: 150,
     rotate: 14,
     depth: 0.85,
@@ -70,40 +69,28 @@ const items: FloatingItemConfig[] = [
     floatDur: 6.2,
   },
   {
-    src: runningShoe,
-    alt: "Hoka running shoe",
-    bottom: "8%",
-    left: "3%",
-    size: 260,
-    rotate: 8,
-    depth: 0.5,
-    delay: 1.25,
-    floatY: 20,
-    floatDur: 8.4,
-  },
-  {
-    src: owala,
-    alt: "Owala water bottle",
-    bottom: "12%",
-    right: "4%",
-    size: 200,
-    rotate: -8,
-    depth: 0.75,
-    delay: 1.4,
-    floatY: 14,
-    floatDur: 7.1,
-  },
-  {
     src: freitag,
     alt: "Freitag bag",
-    top: "42%",
-    right: "1%",
+    bottom: "5%",
+    left: "1%",
     size: 340,
     rotate: -6,
     depth: 0.65,
-    delay: 1.55,
+    delay: 1.25,
     floatY: 16,
     floatDur: 7.6,
+  },
+  {
+    src: runningShoe,
+    alt: "Hoka running shoe",
+    bottom: "7%",
+    right: "3%",
+    size: 260,
+    rotate: 8,
+    depth: 0.5,
+    delay: 1.4,
+    floatY: 20,
+    floatDur: 8.4,
   },
 ];
 
