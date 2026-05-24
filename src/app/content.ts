@@ -8,11 +8,14 @@ import clubs from "../imports/clubs.webp";
 import dksh1 from "../imports/dksh1.webp";
 import dksh2 from "../imports/dksh2.webp";
 import dksh3 from "../imports/dksh3.webp";
+import dksh4 from "../imports/dksh4.webp";
 import rac1 from "../imports/rac1.webp";
 import rac2 from "../imports/rac2.webp";
 import rac3 from "../imports/rac3.webp";
 import rac4 from "../imports/rac4.webp";
 import xmum2 from "../imports/xmum2.webp";
+import xmum3 from "../imports/xmum3.webp";
+import xmum4 from "../imports/xmum4.webp";
 
 export type SectionId = "about" | "experience" | "projects" | "contact";
 
@@ -94,7 +97,7 @@ export const experience: Role[] = [
     photos: [
       { src: dksh1, ratio: "1x1" },
       { src: dksh2, ratio: "3x4" },
-      photo("exp-dksh-c", "1x1"),
+      { src: dksh4, ratio: "1x1" },
       { src: dksh3, ratio: "3x4" },
     ],
   },
@@ -174,8 +177,8 @@ export const experience: Role[] = [
     ],
     photos: [
       { src: xmum2, ratio: "1x1" },
-      photo("exp-edu-b", "3x4"),
-      photo("exp-edu-c", "1x1"),
+      { src: xmum3, ratio: "1x1" },
+      { src: xmum4, ratio: "1x1" },
       photo("exp-edu-d", "3x4"),
     ],
   },

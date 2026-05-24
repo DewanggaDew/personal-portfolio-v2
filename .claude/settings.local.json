@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node scripts/optimize-images.mjs --dir=src/imports/hero-section-asset)",
+      "Bash(node scripts/optimize-images.mjs --dir=src/imports)"
+    ]
+  }
+}
