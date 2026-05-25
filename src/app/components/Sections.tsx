@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { motion, useInView } from "motion/react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { motion, useInView, useScroll, useTransform } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
 import {
   about,
@@ -451,72 +451,138 @@ export function ExperienceSection() {
 }
 
 export function ProjectsSection() {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const trackRef = useRef<HTMLDivElement | null>(null);
+  const [scrollDistance, setScrollDistance] = useState(0);
+
+  useLayoutEffect(() => {
+    const measure = () => {
+      const track = trackRef.current;
+      if (!track) return;
+      const distance = Math.max(0, track.scrollWidth - window.innerWidth);
+      setScrollDistance(distance);
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, []);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"],
+  });
+  const x = useTransform(scrollYProgress, [0, 1], [0, -scrollDistance]);
+
   return (
-    <SectionShell title="Projects">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-12">
-        {projects.map((p, i) => (
-          <motion.a
-            key={p.name}
-            href={p.href ?? "#"}
-            {...stagger(i)}
-            className="group block"
+    <div
+      ref={containerRef}
+      className="relative w-full"
+      style={{ height: `calc(100vh + ${scrollDistance}px)` }}
+    >
+      <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col">
+        <div className="pt-20 px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32">
+          <motion.h1
+            {...fadeUp}
+            style={{
+              ...display,
+              color: "var(--surface-text)",
+              fontWeight: 300,
+              letterSpacing: "-0.03em",
+            }}
+            className="text-5xl md:text-6xl leading-[1.05]"
           >
-            <div
-              className="aspect-4/5 mb-5 overflow-hidden relative"
-              style={{
-                backgroundColor: "rgba(255,255,255,0.04)",
-                border: "1px solid var(--surface-rule)",
-              }}
-            >
-              <motion.div
-                initial={{ scale: 1 }}
-                whileHover={{ scale: 1.04 }}
-                transition={{
-                  duration: 0.8,
-                  ease: [0.22, 1, 0.36, 1] as const,
-                }}
-                className="w-full h-full"
-                style={{
-                  background:
-                    "linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02) 60%, rgba(0,0,0,0.2))",
-                }}
-              />
-              <div className="absolute inset-0 flex items-end p-5">
-                <span
-                  className="text-[10px] tracking-[0.3em] uppercase"
-                  style={{ ...display, color: "var(--surface-muted)" }}
-                >
-                  {p.year}
-                </span>
-              </div>
-            </div>
-            <div className="flex items-baseline justify-between">
-              <span
-                className="text-2xl"
-                style={{
-                  ...display,
-                  color: "var(--surface-text)",
-                  fontWeight: 300,
-                  letterSpacing: "-0.01em",
-                }}
+            Projects
+          </motion.h1>
+        </div>
+        <div className="flex-1 flex items-start pt-18">
+          <motion.div
+            ref={trackRef}
+            style={{ x, willChange: "transform" }}
+            className="flex gap-8 md:gap-12 px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32"
+          >
+            {projects.map((p, i) => (
+              <motion.a
+                key={p.name}
+                href={p.href ?? "#"}
+                target={p.href ? "_blank" : undefined}
+                rel={p.href ? "noreferrer" : undefined}
+                {...stagger(i)}
+                className="group block shrink-0"
+                style={{ width: "clamp(220px, 26vw, 360px)" }}
               >
-                {p.name}
-              </span>
-              <ArrowUpRight
-                className="w-4 h-4 transition-colors"
-                style={{ color: "var(--surface-muted)" }}
-              />
-            </div>
-            <div
-              className="text-sm mt-1"
-              style={{ ...body, color: "var(--surface-text)", opacity: 0.7 }}
-            >
-              {p.tag}
-            </div>
-          </motion.a>
-        ))}
+                <div
+                  className="aspect-4/5 mb-5 overflow-hidden relative"
+                  style={{
+                    backgroundColor: "rgba(255,255,255,0.04)",
+                    border: "1px solid var(--surface-rule)",
+                  }}
+                >
+                  <motion.div
+                    initial={{ scale: 1 }}
+                    whileHover={{ scale: 1.04 }}
+                    transition={{
+                      duration: 0.8,
+                      ease: [0.22, 1, 0.36, 1] as const,
+                    }}
+                    className="w-full h-full"
+                    style={
+                      p.thumbnail
+                        ? undefined
+                        : {
+                            background:
+                              "linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02) 60%, rgba(0,0,0,0.2))",
+                          }
+                    }
+                  >
+                    {p.thumbnail && (
+                      <img
+                        src={p.thumbnail}
+                        alt={p.name}
+                        loading="lazy"
+                        decoding="async"
+                        draggable={false}
+                        className="block h-full w-full object-cover"
+                      />
+                    )}
+                  </motion.div>
+                  <div className="absolute inset-0 flex items-end p-5">
+                    <span
+                      className="text-[10px] tracking-[0.3em] uppercase"
+                      style={{ ...display, color: "var(--surface-muted)" }}
+                    >
+                      {p.year}
+                    </span>
+                  </div>
+                </div>
+                <div className="flex items-baseline justify-between">
+                  <span
+                    className="text-2xl"
+                    style={{
+                      ...display,
+                      color: "var(--surface-text)",
+                      fontWeight: 300,
+                      letterSpacing: "-0.01em",
+                    }}
+                  >
+                    {p.name}
+                  </span>
+                  <ArrowUpRight
+                    className="w-4 h-4 transition-colors"
+                    style={{ color: "var(--surface-muted)" }}
+                  />
+                </div>
+                <div
+                  className="text-sm mt-1"
+                  style={{ ...body, color: "var(--surface-text)", opacity: 0.7 }}
+                >
+                  {p.tag}
+                </div>
+              </motion.a>
+            ))}
+          </motion.div>
+        </div>
       </div>
-    </SectionShell>
+    </div>
   );
 }
 
@@ -531,10 +597,14 @@ export function ContactSection() {
         {contactCopy}
       </motion.p>
       <div style={{ borderBottom: "1px solid var(--surface-rule)" }}>
-        {contactLinks.map((l, i) => (
+        {contactLinks.map((l, i) => {
+          const isExternal = /^https?:\/\//.test(l.href);
+          return (
           <motion.a
             key={l.label}
             href={l.href}
+            target={isExternal ? "_blank" : undefined}
+            rel={isExternal ? "noreferrer" : undefined}
             {...stagger(i + 1)}
             className="flex items-center gap-4 py-4 group"
             style={{ borderTop: "1px solid var(--surface-rule)" }}
@@ -554,7 +624,8 @@ export function ContactSection() {
               style={{ color: "var(--surface-muted)" }}
             />
           </motion.a>
-        ))}
+          );
+        })}
       </div>
     </SectionShell>
   );

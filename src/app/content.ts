@@ -16,6 +16,8 @@ import rac4 from "../imports/rac4.webp";
 import xmum2 from "../imports/xmum2.webp";
 import xmum3 from "../imports/xmum3.webp";
 import xmum4 from "../imports/xmum4.webp";
+import ptAntThumb from "../imports/Projects/PT-ANT.webp";
+import pokerhouseThumb from "../imports/Projects/pokerhouse.webp";
 
 export type SectionId = "about" | "experience" | "projects" | "contact";
 
@@ -189,13 +191,15 @@ export interface Project {
   tag: string;
   year: string;
   href?: string;
+  thumbnail?: string;
 }
 
 export const projects: Project[] = [
-  { name: "Project Name",  tag: "Category",  year: "20XX" },
-  { name: "Project Name",  tag: "Category",  year: "20XX" },
-  { name: "Project Name",  tag: "Category",  year: "20XX" },
-  { name: "Project Name",  tag: "Category",  year: "20XX" },
+  { name: "PT ANT Global", tag: "Corporate Site", year: "2026", href: "https://www.ptants.com/", thumbnail: ptAntThumb },
+  { name: "Poker Engine",  tag: "Research",       year: "2026" },
+  { name: "PokerHouse",    tag: "Web App",        year: "2026", href: "https://pokerhouse-pied.vercel.app/", thumbnail: pokerhouseThumb },
+  { name: "Job Scraper",   tag: "Automation",     year: "2026", href: "https://job-scraper-pi.vercel.app/" },
+  { name: "GB POS-IVM",    tag: "Internal Tool",  year: "2026", href: "https://pos.grahabaut.com/" },
 ];
 
 type Icon = ComponentType<SVGProps<SVGSVGElement>>;
@@ -207,7 +211,7 @@ export interface ContactLink {
 }
 
 export const contactCopy =
-  "Open to collaborate or any enquiries.";
+  "Thanks for dropping by! I'm always open to connecting. Feel free to reach out through any of the channels below, and I'll get back to you as soon as I can. Looking forward to hearing from you!";
 
 export const contactLinks: ContactLink[] = [
   { icon: Mail,     label: "dewangga.indera@gmail.com",      href: "mailto:dewangga.indera@gmail.com" },
