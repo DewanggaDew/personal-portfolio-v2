@@ -1,23 +1,24 @@
-import { Mail, Github, Linkedin, MapPin } from "lucide-react";
-import type { ComponentType, SVGProps } from "react";
-
 import spades from "../imports/spades.webp";
 import diamonds from "../imports/diamonds.webp";
 import hearts from "../imports/hearts.webp";
 import clubs from "../imports/clubs.webp";
-import dksh1 from "../imports/dksh1.webp";
-import dksh2 from "../imports/dksh2.webp";
-import dksh3 from "../imports/dksh3.webp";
-import dksh4 from "../imports/dksh4.webp";
-import rac1 from "../imports/rac1.webp";
-import rac2 from "../imports/rac2.webp";
-import rac3 from "../imports/rac3.webp";
-import rac4 from "../imports/rac4.webp";
-import xmum2 from "../imports/xmum2.webp";
-import xmum3 from "../imports/xmum3.webp";
-import xmum4 from "../imports/xmum4.webp";
+import dksh1 from "../imports/experience/dksh1.webp";
+import dksh2 from "../imports/experience/dksh2.webp";
+import dksh3 from "../imports/experience/dksh3.webp";
+import dksh4 from "../imports/experience/dksh4.webp";
+import rac1 from "../imports/experience/rac1.webp";
+import rac2 from "../imports/experience/rac2.webp";
+import rac3 from "../imports/experience/rac3.webp";
+import rac4 from "../imports/experience/rac4.webp";
+import xmum1 from "../imports/experience/xmum1.webp";
+import xmum2 from "../imports/experience/xmum2.webp";
+import xmum3 from "../imports/experience/xmum3.webp";
+import xmum4 from "../imports/experience/xmum4.webp";
 import ptAntThumb from "../imports/Projects/PT-ANT.webp";
 import pokerhouseThumb from "../imports/Projects/pokerhouse.webp";
+import pokerEngineThumb from "../imports/Projects/pokerengine.webp";
+import jobScraperThumb from "../imports/Projects/job-scraper.webp";
+import gbPosIvmThumb from "../imports/Projects/gb-pos-ivm.webp";
 
 export type SectionId = "about" | "experience" | "projects" | "contact";
 
@@ -181,7 +182,7 @@ export const experience: Role[] = [
       { src: xmum2, ratio: "1x1" },
       { src: xmum3, ratio: "1x1" },
       { src: xmum4, ratio: "1x1" },
-      photo("exp-edu-d", "3x4"),
+      { src: xmum1, ratio: "3x4" },
     ],
   },
 ];
@@ -196,29 +197,27 @@ export interface Project {
 
 export const projects: Project[] = [
   { name: "PT ANT Global", tag: "Corporate Site", year: "2026", href: "https://www.ptants.com/", thumbnail: ptAntThumb },
-  { name: "Poker Engine",  tag: "Research",       year: "2026" },
+  { name: "Poker Engine",  tag: "Research",       year: "2026", thumbnail: pokerEngineThumb },
   { name: "PokerHouse",    tag: "Web App",        year: "2026", href: "https://pokerhouse-pied.vercel.app/", thumbnail: pokerhouseThumb },
-  { name: "Job Scraper",   tag: "Automation",     year: "2026", href: "https://job-scraper-pi.vercel.app/" },
-  { name: "GB POS-IVM",    tag: "Internal Tool",  year: "2026", href: "https://pos.grahabaut.com/" },
+  { name: "Job Scraper",   tag: "Automation",     year: "2026", href: "https://job-scraper-pi.vercel.app/", thumbnail: jobScraperThumb },
+  { name: "GB POS-IVM",    tag: "Internal Tool",  year: "2026", href: "https://pos.grahabaut.com/", thumbnail: gbPosIvmThumb },
 ];
 
-type Icon = ComponentType<SVGProps<SVGSVGElement>>;
-
-export interface ContactLink {
-  icon: Icon;
-  label: string;
-  href: string;
-}
-
-export const contactCopy =
-  "Thanks for dropping by! I'm always open to connecting. Feel free to reach out through any of the channels below, and I'll get back to you as soon as I can. Looking forward to hearing from you!";
-
-export const contactLinks: ContactLink[] = [
-  { icon: Mail,     label: "dewangga.indera@gmail.com",      href: "mailto:dewangga.indera@gmail.com" },
-  { icon: Github,   label: "github.com/DewanggaDew",         href: "https://github.com/DewanggaDew" },
-  { icon: Linkedin, label: "in/dewangga-dewata",             href: "https://www.linkedin.com/in/dewangga-dewata/" },
-  { icon: MapPin,   label: "Jakarta, ID",                    href: "#" },
-];
+export const contactCTA = {
+  headline: ["LET’S DEAL", "A NEW HAND."] as const,
+  supporting:
+    "I’m always game for a good conversation — new product ideas, weird side bets, or just saying hi.",
+  primary: {
+    label: "dewangga.indera@gmail.com",
+    href: "mailto:dewangga.indera@gmail.com",
+  },
+  secondary: [
+    { label: "GITHUB",     href: "https://github.com/DewanggaDew" },
+    { label: "LINKEDIN",   href: "https://www.linkedin.com/in/dewangga-dewata/" },
+    { label: "JAKARTA, ID", href: "#" },
+    { label: "SELANGOR, MY", href: "#" },
+  ] as const,
+};
 
 export const footer = {
   left: "© MMXXVI",

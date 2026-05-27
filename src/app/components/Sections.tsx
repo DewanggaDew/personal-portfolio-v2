@@ -5,8 +5,7 @@ import {
   about,
   experience,
   projects,
-  contactCopy,
-  contactLinks,
+  contactCTA,
   type ExperiencePhoto,
   type PhotoRatio,
 } from "../content";
@@ -588,45 +587,81 @@ export function ProjectsSection() {
 
 export function ContactSection() {
   return (
-    <SectionShell title="Contact">
-      <motion.p
+    <div className="w-full px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32 pt-20 pb-48">
+      <motion.h1
         {...stagger(0)}
-        className="leading-relaxed mb-12 max-w-lg text-lg"
+        style={{
+          ...display,
+          color: "var(--surface-text)",
+          fontWeight: 300,
+          letterSpacing: "-0.04em",
+        }}
+        className="text-[clamp(2.75rem,9vw,8rem)] leading-[0.95] mb-10 max-w-5xl"
+      >
+        {contactCTA.headline[0]}
+        <br />
+        {contactCTA.headline[1]}
+      </motion.h1>
+
+      <motion.p
+        {...stagger(1)}
+        className="leading-relaxed mb-14 max-w-lg text-lg"
         style={{ ...body, color: "var(--surface-text)" }}
       >
-        {contactCopy}
+        {contactCTA.supporting}
       </motion.p>
-      <div style={{ borderBottom: "1px solid var(--surface-rule)" }}>
-        {contactLinks.map((l, i) => {
-          const isExternal = /^https?:\/\//.test(l.href);
-          return (
-          <motion.a
-            key={l.label}
-            href={l.href}
-            target={isExternal ? "_blank" : undefined}
-            rel={isExternal ? "noreferrer" : undefined}
-            {...stagger(i + 1)}
-            className="flex items-center gap-4 py-4 group"
-            style={{ borderTop: "1px solid var(--surface-rule)" }}
+
+      <motion.a
+        {...stagger(2)}
+        href={contactCTA.primary.href}
+        className="group block py-8 mb-12"
+        style={{
+          borderTop: "1px solid var(--surface-rule)",
+          borderBottom: "1px solid var(--surface-rule)",
+        }}
+      >
+        <div className="flex items-center justify-between gap-6">
+          <span
+            className="block transition-transform duration-700 group-hover:translate-x-2"
+            style={{
+              ...display,
+              color: "var(--surface-text)",
+              fontWeight: 300,
+              letterSpacing: "-0.03em",
+              fontSize: "clamp(1.5rem,5.5vw,4rem)",
+              lineHeight: 1.05,
+            }}
           >
-            <l.icon
-              className="w-4 h-4"
-              style={{ color: "var(--surface-muted)" }}
-            />
-            <span
-              className="group-hover:translate-x-1 transition-transform duration-500"
-              style={{ ...body, color: "var(--surface-text)" }}
+            {contactCTA.primary.label}
+          </span>
+          <ArrowUpRight
+            className="shrink-0 w-8 h-8 md:w-12 md:h-12 transition-transform duration-700 group-hover:translate-x-2 group-hover:-translate-y-2"
+            style={{ color: "var(--surface-text)" }}
+          />
+        </div>
+      </motion.a>
+
+      <motion.div
+        {...stagger(3)}
+        className="flex flex-wrap items-center gap-x-8 gap-y-3"
+      >
+        {contactCTA.secondary.map((s) => {
+          const isExternal = /^https?:\/\//.test(s.href);
+          return (
+            <a
+              key={s.label}
+              href={s.href}
+              target={isExternal ? "_blank" : undefined}
+              rel={isExternal ? "noreferrer" : undefined}
+              className="inline-flex items-center gap-1.5 text-[11px] tracking-[0.3em] uppercase opacity-60 hover:opacity-100 transition-opacity duration-300"
+              style={{ ...display, color: "var(--surface-text)" }}
             >
-              {l.label}
-            </span>
-            <ArrowUpRight
-              className="ml-auto w-4 h-4 transition-colors"
-              style={{ color: "var(--surface-muted)" }}
-            />
-          </motion.a>
+              {s.label}
+              {isExternal && <ArrowUpRight className="w-3 h-3" />}
+            </a>
           );
         })}
-      </div>
-    </SectionShell>
+      </motion.div>
+    </div>
   );
 }
