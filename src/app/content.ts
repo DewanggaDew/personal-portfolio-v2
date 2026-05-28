@@ -187,20 +187,87 @@ export const experience: Role[] = [
   },
 ];
 
+export interface ProjectMetric {
+  value: string;
+  label: string;
+}
+
 export interface Project {
   name: string;
   tag: string;
   year: string;
   href?: string;
   thumbnail?: string;
+  summary: string;
+  summaryLinks?: Array<{ text: string; href: string }>;
+  metrics?: ProjectMetric[];
 }
 
 export const projects: Project[] = [
-  { name: "PT ANT Global", tag: "Corporate Site", year: "2026", href: "https://www.ptants.com/", thumbnail: ptAntThumb },
-  { name: "Poker Engine",  tag: "Research",       year: "2026", thumbnail: pokerEngineThumb },
-  { name: "PokerHouse",    tag: "Web App",        year: "2026", href: "https://pokerhouse-pied.vercel.app/", thumbnail: pokerhouseThumb },
-  { name: "Job Scraper",   tag: "Automation",     year: "2026", href: "https://job-scraper-pi.vercel.app/", thumbnail: jobScraperThumb },
-  { name: "GB POS-IVM",    tag: "Internal Tool",  year: "2026", href: "https://pos.grahabaut.com/", thumbnail: gbPosIvmThumb },
+  {
+    name: "PT ANT Global",
+    tag: "Corporate Site",
+    year: "2026",
+    href: "https://www.ptants.com/",
+    thumbnail: ptAntThumb,
+    // GUESS: refine to match the real brief — what was the old site missing, who is the audience?
+    summary:
+      "Corporate site for a solar company that needed a modernized presence to showcase their projects and attract partners, investors, and talent.",
+    metrics: [
+    ],
+  },
+  {
+    name: "Poker Engine",
+    tag: "Research",
+    year: "2026",
+    thumbnail: pokerEngineThumb,
+    // GUESS: I don't know the exact scope — is this a solver, an equity calculator, a bot?
+    summary:
+      "Research project exploring poker decision-making by making a poker simulation based on a published research paper \"Beyond Game Theory Optimal\" .",
+    summaryLinks: [
+      {
+        text: "Beyond Game Theory Optimal",
+        href: "https://www.researchgate.net/publication/395970251_Beyond_Game_Theory_Optimal_Profit-Maximizing_Poker_Agents_for_No-Limit_Holdem",
+      },
+    ],
+    metrics: [
+    ],
+  },
+  {
+    name: "PokerHouse",
+    tag: "Web App",
+    year: "2026",
+    href: "https://pokerhouse-pied.vercel.app/",
+    thumbnail: pokerhouseThumb,
+    
+    summary:
+      "Web app for casual poker players to track home-game sessions and settle buy-ins without spreadsheets eliminating the need for manual calculations.",
+  },
+  {
+    name: "Job Scraper",
+    tag: "Automation",
+    year: "2026",
+    href: "https://job-scraper-pi.vercel.app/",
+    thumbnail: jobScraperThumb,
+    // GUESS: tune to the real sources scraped and the workflow it replaced
+    summary:
+      "Personal automation that aggregates fresh job listings catered to personal resume into one feed using playwright to scrape multiple job portals, replacing manual searching and tracking of listings across platforms.",
+    metrics: [
+      
+    ],
+  },
+  {
+    name: "GB POS-IVM",
+    tag: "Internal Tool",
+    year: "2026",
+    href: "https://pos.grahabaut.com/",
+    thumbnail: gbPosIvmThumb,
+    // GUESS: I don't know the business — what was being tracked manually before, and for whom?
+    summary:
+      "Custom made POS tool and inventory system baked into one solution for a hardware store to track sales and inventory in real time, replacing a manual spreadsheet-based system that was prone to errors and delays.",
+    metrics: [
+    ],
+  },
 ];
 
 export const contactCTA = {

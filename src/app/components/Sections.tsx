@@ -154,6 +154,58 @@ function ImpactChip({ value, label }: { value: string; label: string }) {
   );
 }
 
+function renderSummary(
+  summary: string,
+  links?: Array<{ text: string; href: string }>,
+) {
+  if (!links || links.length === 0) return summary;
+  const sorted = [...links].sort((a, b) => b.text.length - a.text.length);
+  type Part = string | { text: string; href: string };
+  let parts: Part[] = [summary];
+  for (const link of sorted) {
+    const next: Part[] = [];
+    for (const part of parts) {
+      if (typeof part !== "string") {
+        next.push(part);
+        continue;
+      }
+      const segments = part.split(link.text);
+      segments.forEach((seg, i) => {
+        if (seg) next.push(seg);
+        if (i < segments.length - 1) next.push(link);
+      });
+    }
+    parts = next;
+  }
+  return parts.map((part, i) =>
+    typeof part === "string" ? (
+      <span key={i}>{part}</span>
+    ) : (
+      <span
+        key={i}
+        role="link"
+        tabIndex={0}
+        onClick={(e) => {
+          e.stopPropagation();
+          e.preventDefault();
+          window.open(part.href, "_blank", "noopener,noreferrer");
+        }}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.stopPropagation();
+            e.preventDefault();
+            window.open(part.href, "_blank", "noopener,noreferrer");
+          }
+        }}
+        className="underline underline-offset-2 cursor-pointer"
+        style={{ color: "var(--surface-text)", opacity: 0.9 }}
+      >
+        {part.text}
+      </span>
+    ),
+  );
+}
+
 type LandingZone = "top" | "bottom";
 
 /**
@@ -479,7 +531,7 @@ export function ProjectsSection() {
       style={{ height: `calc(100vh + ${scrollDistance}px)` }}
     >
       <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col">
-        <div className="pt-20 px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32">
+        <div className="pt-12 px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32">
           <motion.h1
             {...fadeUp}
             style={{
@@ -507,7 +559,7 @@ export function ProjectsSection() {
                 rel={p.href ? "noreferrer" : undefined}
                 {...stagger(i)}
                 className="group block shrink-0"
-                style={{ width: "clamp(220px, 26vw, 360px)" }}
+                style={{ width: "clamp(240px, 22vw, 320px)" }}
               >
                 <div
                   className="aspect-4/5 mb-5 overflow-hidden relative"
@@ -544,10 +596,49 @@ export function ProjectsSection() {
                       />
                     )}
                   </motion.div>
-                  <div className="absolute inset-0 flex items-end p-5">
+                  {p.metrics && p.metrics.length > 0 && (
+                    <div
+                      className="absolute inset-x-0 top-0 p-5 pb-8 flex flex-wrap gap-x-5 gap-y-2"
+                      style={{
+                        background:
+                          "linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0))",
+                      }}
+                    >
+                      {p.metrics.map((m) => (
+                        <div key={m.label} className="flex flex-col">
+                          <span
+                            className="text-lg"
+                            style={{
+                              ...display,
+                              color: "#fff",
+                              fontWeight: 300,
+                            }}
+                          >
+                            {m.value}
+                          </span>
+                          <span
+                            className="text-[10px] tracking-[0.2em] uppercase"
+                            style={{
+                              ...display,
+                              color: "rgba(255,255,255,0.7)",
+                            }}
+                          >
+                            {m.label}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  <div
+                    className="absolute inset-x-0 bottom-0 flex items-end p-5 pt-8"
+                    style={{
+                      background:
+                        "linear-gradient(0deg, rgba(0,0,0,0.55), rgba(0,0,0,0))",
+                    }}
+                  >
                     <span
                       className="text-[10px] tracking-[0.3em] uppercase"
-                      style={{ ...display, color: "var(--surface-muted)" }}
+                      style={{ ...display, color: "rgba(255,255,255,0.85)" }}
                     >
                       {p.year}
                     </span>
@@ -576,6 +667,12 @@ export function ProjectsSection() {
                 >
                   {p.tag}
                 </div>
+                <p
+                  className="text-sm mt-3 leading-snug"
+                  style={{ ...body, color: "var(--surface-text)", opacity: 0.6 }}
+                >
+                  {renderSummary(p.summary, p.summaryLinks)}
+                </p>
               </motion.a>
             ))}
           </motion.div>
