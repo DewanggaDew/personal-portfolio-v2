@@ -1,5 +1,5 @@
 import { useEffect, useState, type CSSProperties } from "react";
-import { motion } from "motion/react";
+import { m } from "motion/react";
 import { CardDeck } from "./components/CardDeck";
 import { Hero } from "./components/Hero";
 import {
@@ -61,7 +61,7 @@ export default function App() {
       className="min-h-screen w-full relative transition-colors duration-700"
       style={surfaceStyle}
     >
-      <motion.div
+      <m.div
         key={bg + "-spot"}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -94,7 +94,7 @@ export default function App() {
         }}
       />
 
-      <motion.main
+      <m.main
         className="relative z-10"
         initial={{ opacity: 0 }}
         animate={{ opacity: loading ? 0 : 1 }}
@@ -114,7 +114,7 @@ export default function App() {
         <section id="contact" className="scroll-mt-24">
           <ContactSection />
         </section>
-      </motion.main>
+      </m.main>
 
       <footer
         className="relative z-10 px-6 md:px-12 py-8 flex justify-between items-center text-[10px] tracking-[0.4em]"

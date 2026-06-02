@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+import { m } from "motion/react";
 import { backgrounds, type BgKey } from "../surfaces";
 
 interface Props {
@@ -8,7 +8,7 @@ interface Props {
 
 export function BackgroundSwitcher({ current, onChange }: Props) {
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.4, duration: 0.6 }}
@@ -27,6 +27,7 @@ export function BackgroundSwitcher({ current, onChange }: Props) {
         return (
           <button
             key={k}
+            type="button"
             onClick={() => onChange(k)}
             title={b.label}
             aria-label={`Switch surface to ${b.label}`}
@@ -34,7 +35,7 @@ export function BackgroundSwitcher({ current, onChange }: Props) {
             className="relative group"
           >
             <span
-              className="block h-5 w-5 rounded-full ring-1 ring-white/20 transition-transform"
+              className="block size-5 rounded-full ring-1 ring-white/20 transition-transform"
               style={{
                 background: b.swatch,
                 transform: active ? "scale(1.15)" : "scale(1)",
@@ -44,6 +45,6 @@ export function BackgroundSwitcher({ current, onChange }: Props) {
           </button>
         );
       })}
-    </motion.div>
+    </m.div>
   );
 }

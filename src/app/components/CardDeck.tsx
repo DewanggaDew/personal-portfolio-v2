@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { motion } from "motion/react";
+import { m } from "motion/react";
 import { Card } from "./Card";
 import { cards, type SectionId } from "../content";
 
@@ -128,7 +128,7 @@ export function CardDeck({ onSelect, onReady }: CardDeckProps) {
   const targetY = phase === "dock" ? (open ? dockOpenY : dockClosedY) : centeredY;
 
   return (
-    <motion.div
+    <m.div
       initial={false}
       animate={{ y: targetY }}
       transition={{ type: "spring", stiffness: 110, damping: 22 }}
@@ -143,7 +143,7 @@ export function CardDeck({ onSelect, onReady }: CardDeckProps) {
       style={{ height: deckHeight }}
     >
       <div className="relative w-full h-full flex items-center justify-center">
-        <motion.div
+        <m.div
           animate={{
             opacity: phase === "dock" ? 0 : 1,
             y: phase === "stack" ? 0 : -20,
@@ -160,7 +160,7 @@ export function CardDeck({ onSelect, onReady }: CardDeckProps) {
           >
             {phase === "stack" ? "SHUFFLING THE DECK" : "DRAW A CARD"}
           </div>
-        </motion.div>
+        </m.div>
 
         {cards.map((c, i) => {
           const t = transforms(i);
@@ -184,6 +184,6 @@ export function CardDeck({ onSelect, onReady }: CardDeckProps) {
           );
         })}
       </div>
-    </motion.div>
+    </m.div>
   );
 }

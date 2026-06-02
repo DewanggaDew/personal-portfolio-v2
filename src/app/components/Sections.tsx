@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { motion, useInView, useScroll, useTransform } from "motion/react";
+import { m, useInView, useScroll, useTransform } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
 import {
   about,
@@ -38,7 +38,7 @@ function SectionShell({
 }) {
   return (
     <div className="w-full px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32 pt-20 pb-48">
-      <motion.div {...fadeUp} className="mb-16">
+      <m.div {...fadeUp} className="mb-16">
         <h1
           style={{
             ...display,
@@ -50,7 +50,7 @@ function SectionShell({
         >
           {title}
         </h1>
-      </motion.div>
+      </m.div>
       {children}
     </div>
   );
@@ -75,15 +75,15 @@ function BlindLine({ text, delay }: { text: string; delay: number }) {
       className="relative inline-block overflow-hidden align-top"
       style={{ maxWidth: "100%" }}
     >
-      <motion.span
+      <m.span
         className="inline-block"
         initial={{ opacity: 0 }}
         animate={inView ? { opacity: 1 } : { opacity: 0 }}
         transition={{ delay: delay + inDuration, duration: 0 }}
       >
         {text}
-      </motion.span>
-      <motion.span
+      </m.span>
+      <m.span
         aria-hidden
         className="absolute inset-0"
         style={{ background: "var(--surface-text)", zIndex: 1 }}
@@ -118,7 +118,7 @@ export function AboutSection() {
         }}
       >
         {about.lines.map((line, i) => (
-          <div key={i} className="block">
+          <div key={line} className="block">
             <BlindLine text={line} delay={0.15 + i * 0.08} />
           </div>
         ))}
@@ -179,10 +179,10 @@ function renderSummary(
   }
   return parts.map((part, i) =>
     typeof part === "string" ? (
-      <span key={i}>{part}</span>
+      <span key={`${i}-${part}`}>{part}</span>
     ) : (
       <span
-        key={i}
+        key={`${i}-${part.href}`}
         role="link"
         tabIndex={0}
         onClick={(e) => {
@@ -294,7 +294,7 @@ function DealtPhotosOverlay({
       className="pointer-events-none fixed inset-x-0 top-0 hidden lg:block"
       style={{ height: vh, zIndex: 25 }}
     >
-      <motion.div
+      <m.div
         className="relative mx-auto"
         animate={{ y: centerY }}
         transition={{ type: "spring", stiffness: 80, damping: 22, mass: 0.9 }}
@@ -305,8 +305,8 @@ function DealtPhotosOverlay({
           const pos = PHOTO_LANDING[i % PHOTO_LANDING.length]!;
           const delay = active ? 0.08 + i * 0.13 : 0;
           return (
-            <motion.div
-              key={i}
+            <m.div
+              key={p.src}
               initial={{
                 opacity: 0,
                 x: 0,
@@ -349,7 +349,6 @@ function DealtPhotosOverlay({
                 height: dim.height,
                 boxShadow:
                   "0 32px 60px -18px rgba(0,0,0,0.78), 0 8px 16px -4px rgba(0,0,0,0.5)",
-                willChange: "transform, opacity",
               }}
             >
               <img
@@ -360,10 +359,10 @@ function DealtPhotosOverlay({
                 decoding="async"
                 className="block h-full w-full object-cover"
               />
-            </motion.div>
+            </m.div>
           );
         })}
-      </motion.div>
+      </m.div>
     </div>
   );
 }
@@ -408,7 +407,7 @@ export function ExperienceSection() {
         style={{ borderBottom: "1px solid var(--surface-rule)" }}
       >
         {experience.map((r, i) => (
-          <motion.div
+          <m.div
             key={`${r.role}-${r.company}`}
             ref={(el) => {
               rowRefs.current[i] = el;
@@ -470,7 +469,7 @@ export function ExperienceSection() {
                     style={{ ...body, color: "var(--surface-text)" }}
                   >
                     <span
-                      className="mt-2 h-1.5 w-1.5 rounded-full"
+                      className="mt-2 size-1.5 rounded-full"
                       style={{ backgroundColor: "var(--surface-muted)" }}
                     />
                     <span style={{ opacity: 0.82 }}>{bullet}</span>
@@ -489,7 +488,7 @@ export function ExperienceSection() {
                 ))}
               </div>
             </div>
-          </motion.div>
+          </m.div>
         ))}
       </div>
       <DealtPhotosOverlay
@@ -532,7 +531,7 @@ export function ProjectsSection() {
     >
       <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col">
         <div className="pt-12 px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32">
-          <motion.h1
+          <m.h1
             {...fadeUp}
             style={{
               ...display,
@@ -543,16 +542,16 @@ export function ProjectsSection() {
             className="text-5xl md:text-6xl leading-[1.05]"
           >
             Projects
-          </motion.h1>
+          </m.h1>
         </div>
         <div className="flex-1 flex items-start pt-18">
-          <motion.div
+          <m.div
             ref={trackRef}
-            style={{ x, willChange: "transform" }}
+            style={{ x }}
             className="flex gap-8 md:gap-12 px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32"
           >
             {projects.map((p, i) => (
-              <motion.a
+              <m.a
                 key={p.name}
                 href={p.href ?? "#"}
                 target={p.href ? "_blank" : undefined}
@@ -568,7 +567,7 @@ export function ProjectsSection() {
                     border: "1px solid var(--surface-rule)",
                   }}
                 >
-                  <motion.div
+                  <m.div
                     initial={{ scale: 1 }}
                     whileHover={{ scale: 1.04 }}
                     transition={{
@@ -595,7 +594,7 @@ export function ProjectsSection() {
                         className="block h-full w-full object-cover"
                       />
                     )}
-                  </motion.div>
+                  </m.div>
                   {p.metrics && p.metrics.length > 0 && (
                     <div
                       className="absolute inset-x-0 top-0 p-5 pb-8 flex flex-wrap gap-x-5 gap-y-2"
@@ -657,7 +656,7 @@ export function ProjectsSection() {
                     {p.name}
                   </span>
                   <ArrowUpRight
-                    className="w-4 h-4 transition-colors"
+                    className="size-4 transition-colors"
                     style={{ color: "var(--surface-muted)" }}
                   />
                 </div>
@@ -673,9 +672,9 @@ export function ProjectsSection() {
                 >
                   {renderSummary(p.summary, p.summaryLinks)}
                 </p>
-              </motion.a>
+              </m.a>
             ))}
-          </motion.div>
+          </m.div>
         </div>
       </div>
     </div>
@@ -685,7 +684,7 @@ export function ProjectsSection() {
 export function ContactSection() {
   return (
     <div className="w-full px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32 pt-20 pb-48">
-      <motion.h1
+      <m.h1
         {...stagger(0)}
         style={{
           ...display,
@@ -698,17 +697,17 @@ export function ContactSection() {
         {contactCTA.headline[0]}
         <br />
         {contactCTA.headline[1]}
-      </motion.h1>
+      </m.h1>
 
-      <motion.p
+      <m.p
         {...stagger(1)}
         className="leading-relaxed mb-14 max-w-lg text-lg"
         style={{ ...body, color: "var(--surface-text)" }}
       >
         {contactCTA.supporting}
-      </motion.p>
+      </m.p>
 
-      <motion.a
+      <m.a
         {...stagger(2)}
         href={contactCTA.primary.href}
         className="group block py-8 mb-12"
@@ -736,9 +735,9 @@ export function ContactSection() {
             style={{ color: "var(--surface-text)" }}
           />
         </div>
-      </motion.a>
+      </m.a>
 
-      <motion.div
+      <m.div
         {...stagger(3)}
         className="flex flex-wrap items-center gap-x-8 gap-y-3"
       >
@@ -754,11 +753,11 @@ export function ContactSection() {
               style={{ ...display, color: "var(--surface-text)" }}
             >
               {s.label}
-              {isExternal && <ArrowUpRight className="w-3 h-3" />}
+              {isExternal && <ArrowUpRight className="size-3" />}
             </a>
           );
         })}
-      </motion.div>
+      </m.div>
     </div>
   );
 }

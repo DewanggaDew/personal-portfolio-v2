@@ -1,5 +1,5 @@
 import { type CSSProperties } from "react";
-import { motion } from "motion/react";
+import { m } from "motion/react";
 import { backgrounds } from "../surfaces";
 
 type SurfaceVars = CSSProperties & {
@@ -47,7 +47,7 @@ export default function NotFound() {
         }}
       />
 
-      <motion.main
+      <m.main
         className="relative z-10 min-h-screen flex flex-col items-center justify-center px-6"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -72,7 +72,7 @@ export default function NotFound() {
           className="mt-8 text-[10px] md:text-xs tracking-[0.5em] uppercase text-center"
           style={{ fontFamily: "var(--font-display)", color: theme.muted }}
         >
-          Signal lost — page not found
+          Signal lost: page not found
         </p>
 
         <a
@@ -87,7 +87,7 @@ export default function NotFound() {
           <span aria-hidden="true">←</span>
           Return home
         </a>
-      </motion.main>
+      </m.main>
 
       <footer
         className="absolute bottom-0 left-0 right-0 z-10 px-6 md:px-12 py-8 flex justify-between items-center text-[10px] tracking-[0.4em]"

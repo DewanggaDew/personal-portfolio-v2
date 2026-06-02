@@ -1,2 +1,11 @@
 packages:
   - '.'
+
+# Supply-chain hardening (react-doctor/require-pnpm-hardening).
+# minimumReleaseAge: ignore versions published less than 7 days ago (10080 min),
+# so freshly published — and quickly-unpublished — malware isn't installed on sight.
+minimumReleaseAge: 10080
+# Refuse packages whose provenance/signature trust weakens between resolutions.
+trustPolicy: no-downgrade
+# Keep transitive deps coming from the registry (the recent-pnpm default).
+blockExoticSubdeps: true

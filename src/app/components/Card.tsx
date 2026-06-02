@@ -1,4 +1,4 @@
-import { motion, useMotionValue, useTransform } from "motion/react";
+import { m, useMotionValue, useTransform } from "motion/react";
 
 interface CardProps {
   src: string;
@@ -35,7 +35,7 @@ export function Card({
   const dragTilt = useTransform(dragX, [-300, 0, 300], [-15, 0, 15]);
 
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: 80, scale: 0.6 }}
       animate={{
         opacity: 1,
@@ -48,7 +48,7 @@ export function Card({
       style={{ zIndex: isHovered ? 50 : z }}
       className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
     >
-      <motion.div
+      <m.div
         drag={interactive}
         dragSnapToOrigin
         dragElastic={0.7}
@@ -65,7 +65,7 @@ export function Card({
         }}
         className="relative select-none touch-none focus:outline-none"
       >
-        <motion.div
+        <m.div
           animate={{ width, height }}
           transition={{ type: "spring", stiffness: 140, damping: 22 }}
           className="relative rounded-lg overflow-hidden shadow-[0_30px_80px_-20px_rgba(0,0,0,0.85)] ring-1 ring-white/10"
@@ -79,7 +79,7 @@ export function Card({
             fetchPriority="high"
             className="w-full h-full object-cover pointer-events-none"
           />
-          <motion.div
+          <m.div
             animate={{ opacity: isHovered ? 1 : 0, y: isHovered ? 0 : -6 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
             className="absolute inset-x-0 top-0 flex items-start justify-center pt-3 pointer-events-none"
@@ -90,9 +90,9 @@ export function Card({
             >
               {label}
             </span>
-          </motion.div>
-        </motion.div>
-      </motion.div>
-    </motion.div>
+          </m.div>
+        </m.div>
+      </m.div>
+    </m.div>
   );
 }

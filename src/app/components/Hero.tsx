@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import {
-  motion,
+  m,
   useScroll,
   useTransform,
   type MotionValue,
@@ -145,7 +145,7 @@ function FloatingItem({
   const fade = useTransform(progress, [0, 0.6, 1], [1, 0.55, 0]);
 
   return (
-    <motion.div
+    <m.div
       style={{
         position: "absolute",
         top: item.top,
@@ -154,7 +154,6 @@ function FloatingItem({
         bottom: item.bottom,
         y: drift,
         opacity: fade,
-        willChange: "transform, opacity",
       }}
       initial={{ opacity: 0, scale: 0.78, rotate: item.rotate - 10 }}
       animate={{ opacity: 1, scale: 1, rotate: item.rotate }}
@@ -164,7 +163,7 @@ function FloatingItem({
         ease: [0.22, 1, 0.36, 1],
       }}
     >
-      <motion.img
+      <m.img
         src={item.src}
         alt={item.alt}
         draggable={false}
@@ -188,7 +187,7 @@ function FloatingItem({
             "url(#hero-white-key) drop-shadow(0 18px 28px rgba(0,0,0,0.45))",
         }}
       />
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -232,12 +231,12 @@ export function Hero() {
       >
         {hero.lines.map((line, i) => (
           <span key={line} className="block overflow-hidden">
-            <motion.span
+            <m.span
               {...lineAnim(i)}
               className="block text-[clamp(54px,15vw,280px)] md:text-[clamp(72px,17vw,280px)]"
             >
               {line}
-            </motion.span>
+            </m.span>
           </span>
         ))}
       </h1>

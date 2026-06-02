@@ -76,13 +76,12 @@ adding or replacing a file there, run:
 pnpm optimize-images
 ```
 
-This re-encodes every image in the directory to a well-compressed WebP using
-[sharp](https://sharp.pixelplumbing.com/), clamps the longest edge to 1024 px
-(retina cards never render larger than ~660 px wide), and deletes the original
-JPEG/PNG once the WebP is on disk. Re-running on already-optimized files is a
-safe no-op — outputs that would be larger than the source are skipped.
+This re-encodes every image to a compressed WebP via
+[sharp](https://sharp.pixelplumbing.com/), clamps the longest edge to 1024 px,
+and deletes the original once the WebP is written. Re-running is a safe no-op:
+outputs larger than the source are skipped.
 
-Useful flags:
+Flags:
 
 ```bash
 pnpm optimize-images -- --quality=75       # smaller files, slightly lower quality
@@ -91,9 +90,6 @@ pnpm optimize-images -- --max-width=0      # disable resizing, only re-encode
 pnpm optimize-images -- --keep-source      # preserve .jpg/.png next to .webp
 pnpm optimize-images -- --dry-run          # preview the savings without writing
 ```
-
-The current 4 card faces total **~262 kB** on disk (down from ~11 MB) after
-running with the defaults.
 
 ## Adding a new section
 
